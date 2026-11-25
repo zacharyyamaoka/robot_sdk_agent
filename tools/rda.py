@@ -1,7 +1,8 @@
-"""The agent's loop tool (not part of the ruler): score a solution, record it, refresh PROGRESS.md and status.json.
+"""The agent's loop tool (not part of the ruler): score a solution, record it, refresh PROGRESS.md, the dashboard's
+Scoreboard tab (site/tabs/10-scoreboard.md) and status.json.
 
     python3 tools/rda.py evaluate <solution> [--directory live|main] [--inputs saved.json]
-    python3 tools/rda.py progress            # regenerate PROGRESS.md + status.json from ledger.jsonl
+    python3 tools/rda.py progress            # regenerate PROGRESS.md, the Scoreboard tab + status.json from ledger.jsonl
 
 `evaluate` collects the inputs with the frozen scorer (or re-scores a saved inputs file), saves them beside the
 solution (solutions/<id>/runs/<t>.inputs.json, so any score can be re-derived offline), writes its scorecard.json,
@@ -24,6 +25,8 @@ from scorer.collect import collect  # noqa: E402
 from scorer.score import GATES, score  # noqa: E402
 
 LEDGER = REPO / "ledger.jsonl"
+SCOREBOARD = REPO / "site" / "tabs" / "10-scoreboard.md"
+DIRECTORY = "https://zacharyyamaoka.github.io/robot_sdk/"
 LIST_METRICS = ("unlisted_repos", "undeclared_packages", "dead_links", "ci_not_green", "pypi_mismatch")
 
 
@@ -98,8 +101,8 @@ def rank_key(row: dict) -> tuple:
     return (not row["admissible"], -row["gate_pass_rate"], objective)
 
 
-def progress() -> None:
-    ledger = rows()
+def progress_lines(ledger: list[dict]) -> tuple[list[str], dict | None]:
+    """PROGRESS.md's lines from the ledger, and the best row on the current ruler."""
     newest: dict[str, dict] = {}
     for row in ledger:
         if row.get("ruler") == RULER:  # rows scored on an older ruler stay in the ledger, never in the ranking
@@ -140,7 +143,33 @@ def progress() -> None:
             lines.append(f"| {row['t']} | `{row['solution']}` | {row['directory']} | {fmt(row['objective'])} | "
                          f"{fmt(m['lint_failures'])} | {fmt(m['unlisted_repos'])} | {fmt(m['undeclared_packages'])} | "
                          f"{fmt(m['dead_links'])} | {fmt(m['ci_not_green'])} | {fmt(m['pypi_mismatch'])} |")  # fmt: skip
+    return lines, best
+
+
+def scoreboard(progress_md: list[str]) -> str:
+    """The dashboard's Scoreboard tab (blackbox_agent's site/tabs/, one Markdown file = one tab): PROGRESS.md's tables
+    under the directory this agent keeps. WHY a generated tab (2026-11-24): the hand-written page this site had before
+    the stock blackbox_agent landing showed the gate matrix first; the stock tabs fold no per-gate pass/fail for this
+    box's ledger yet, and a copy would drift, so the loop writes the tab with PROGRESS.md."""
+    return "\n".join([
+        "# Scoreboard",
+        "",
+        f"The directory this agent keeps true and current: **[robot-sdk]({DIRECTORY})** "
+        f"([graph.json]({DIRECTORY}data/graph.json), [repo](https://github.com/zacharyyamaoka/robot_sdk)). "
+        "Every gate and how it is measured: "
+        "[OBJECTIVES.md](https://github.com/zacharyyamaoka/robot_sdk_agent/blob/main/OBJECTIVES.md).",
+        "",
+        f"Generated with PROGRESS.md by `python3 tools/rda.py progress` from `ledger.jsonl` (ruler {RULER}); never edit by hand.",
+        *progress_md[3:],  # after PROGRESS.md's title, blank line and generated-by line
+    ]) + "\n"
+
+
+def progress() -> None:
+    ledger = rows()
+    lines, best = progress_lines(ledger)
     (REPO / "PROGRESS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    SCOREBOARD.parent.mkdir(parents=True, exist_ok=True)
+    SCOREBOARD.write_text(scoreboard(lines), encoding="utf-8")
     status(best, ledger)
 
 

@@ -2,6 +2,8 @@
 
 **[▶ Live page](https://zacharyyamaoka.github.io/robot_sdk_agent/)**, redeployed from `main` on every push · a black-box agent repo in the trajectory_tracking_agent format
 
+The landing page and dashboard are [blackbox_agent](https://github.com/zacharyyamaoka/blackbox_agent)'s stock ones, built from this repo's git history on every push (`.github/workflows/pages.yml` calls its `site.yml`); `uvx --from git+https://github.com/zacharyyamaoka/blackbox_agent@v0 blackbox serve --box .` shows them locally.
+
 An agent that keeps [robot-sdk](https://github.com/zacharyyamaoka/robot_sdk) a true, current directory of the robot-*
 packages. Each package describes itself in its own `robot-sdk.toml`; robot_sdk aggregates those into `graph.json`
 and lints them against the code. This agent's job is to keep that aggregate, and the live site built from it, fresh,
@@ -16,7 +18,7 @@ true and complete. A frozen scorer measures it from public data only; a populati
 | [`REFERENCES.md`](REFERENCES.md) | Prior art and what this builds on |
 | [`solutions/`](solutions/) | The population: one folder per solution, its lineage, scorecard and the saved inputs of every score |
 | [`scorer/`](scorer/) | The frozen ruler: `collect.py` (public data in) and `score.py` (pure scorecard out) |
-| [`site/`](site/) | The live page: reads only `ledger.jsonl` and `status.json` |
+| [`site/`](site/) | What the live page adds to blackbox_agent's stock one: `nav.json` (the site bar) and `tabs/10-scoreboard.md` (the Scoreboard tab, written by `tools/rda.py progress` with `PROGRESS.md`) |
 
 ```bash
 python3 tools/rda.py evaluate s0

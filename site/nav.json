@@ -1,0 +1,21 @@
+{
+ "schema": "bb-site-nav/1",
+ "what": "The site bar on every page of this site (blackbox_agent viewer CONTRACT §18, drawn by the package's bb-site-nav): the box's name (to the landing page) and its dashboards in the top row, the open dashboard's own tabs below (the stock tabs, then this box's own from site/tabs/: the Scoreboard). Hand-written; every href is relative to this file and inside the site, so robot-sdk's live directory (https://zacharyyamaoka.github.io/robot_sdk/) is linked from the Scoreboard tab, not from here. A dashboard joins by adding one entry here and its id in order.",
+ "site": {
+  "name": "Robot SDK Agent",
+  "landing": "index.html",
+  "home": "blackbox",
+  "repo": "https://github.com/zacharyyamaoka/robot_sdk_agent"
+ },
+ "groups": [
+  {"id": "box", "label": "Black box", "kind": "box"}
+ ],
+ "dashboards": [
+  {
+   "id": "blackbox", "label": "Black box", "group": "box", "icon": "box", "href": "dashboard/", "tabs": "viewer",
+   "about": "The agent's search: the solutions, the gates, the agents, the activity and the ideas; the Scoreboard tab holds every solution's gate matrix against robot-sdk's live directory."
+  }
+ ],
+ "order": ["blackbox"],
+ "overflow": {"rule": "priority-plus", "label": "More", "keep": "current", "fold": "short labels first, then the highest priority number, right to left; the open tab never folds"}
+}

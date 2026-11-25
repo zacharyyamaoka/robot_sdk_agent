@@ -13,9 +13,15 @@ packages, by proposing better ways to keep it so. Read `OBJECTIVES.md` first; it
 3. Deploy it, run it for real (`gh workflow run …`, or wait for its trigger), and put the run URLs in `evidence`.
 4. Score it: `python3 tools/rda.py evaluate <id>` (2-3 min: it rebuilds the directory from public clones). It saves
    the inputs under `solutions/<id>/runs/`, writes `scorecard.json`, appends `ledger.jsonl`, and refreshes
-   `PROGRESS.md` and `status.json`. Score the incumbent in the same hour too, so the two snapshots see the same world.
-5. `python3 -m pytest -q` must pass; commit the solution with `ledger.jsonl PROGRESS.md status.json ideas.md`, win
-   or lose; push. Update `ideas.md`: cross off what you tried, add what the result suggests.
+   `PROGRESS.md`, the dashboard's Scoreboard tab (`site/tabs/10-scoreboard.md`) and `status.json`. Score the
+   incumbent in the same hour too, so the two snapshots see the same world.
+5. `python3 -m pytest -q` must pass; commit the solution with `ledger.jsonl PROGRESS.md site/tabs status.json
+   ideas.md`, win or lose; push. Update `ideas.md`: cross off what you tried, add what the result suggests.
+6. The page: run the blackbox loop's page step (`uvx --from git+https://github.com/zacharyyamaoka/blackbox_agent@v0
+   blackbox skill` prints the loop): `blackbox serve --box .` shows the site the push will build (`blackbox build
+   --box . --out _site` writes it; `blackbox check --box .` says what the box is missing). The push rebuilds the live
+   page: the landing and dashboard are blackbox_agent's stock ones, never a page in this repo; this repo adds only
+   `site/nav.json` and `site/tabs/`.
 
 ## Rules
 
@@ -35,6 +41,8 @@ packages, by proposing better ways to keep it so. Read `OBJECTIVES.md` first; it
 - **One change per solution**, named in `meta.json`'s `change`.
 - **State lives in files**, so any session can stop at any point and the next resumes from `ledger.jsonl` +
   `solutions/` + `ideas.md`.
+- **The page is blackbox_agent's.** Never write a `site/index.html` (it is not used); a box replaces the stock
+  landing only with `site/overrides/index.html`, which the dashboard counts as an override.
 
 ## Lessons so far (generation 0, 2026-11-24)
 
