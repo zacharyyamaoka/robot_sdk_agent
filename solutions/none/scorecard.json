@@ -1,0 +1,107 @@
+{
+ "schema": "robot-sdk-agent-scorecard/1",
+ "ruler": "v1",
+ "collected": "2026-11-25T04:28:33+00:00",
+ "directory": "main",
+ "objective": {
+  "name": "max_stale_hours",
+  "value": null,
+  "direction": "down"
+ },
+ "admissible": false,
+ "gate_pass_rate": 0.2222222222222222,
+ "gates": {
+  "fresh_24h": false,
+  "lint_clean": true,
+  "graph_true": false,
+  "listed_all": false,
+  "declared_all": true,
+  "links_alive": false,
+  "ci_green": false,
+  "pypi_current": false,
+  "site_current": false
+ },
+ "failed_gates": [
+  "ci_green",
+  "fresh_24h",
+  "graph_true",
+  "links_alive",
+  "listed_all",
+  "pypi_current",
+  "site_current"
+ ],
+ "metrics": {
+  "stale_hours": {
+   "robot_msgs": 0.2427777777777778,
+   "robot_models": 0.0,
+   "robot_controllers": 0.0,
+   "robot_reach": 0.0,
+   "robot_thermal": 0.0,
+   "robot_trajectories": 0.0,
+   "robot_autonomy": 0.0,
+   "robot_metrics": 0.0,
+   "robot_activity": 0.0,
+   "traj_compare": null,
+   "sim2real": 0.0,
+   "robot_diagnostics": 0.0,
+   "like_keras": 0.0,
+   "robot_sdk_agent": null,
+   "trajectory_tracking_agent": 0.0
+  },
+  "max_stale_hours": null,
+  "stale_packages": 3,
+  "listed": 15,
+  "lint_failures": 0,
+  "lint_pass_rate": 1.0,
+  "graph_matches_rebuild": false,
+  "graph_differs_in": [
+   "agents"
+  ],
+  "unlisted_repos": [
+   "dataclass_coverage",
+   "gripper-collision-tuner",
+   "robot_sdk_agent"
+  ],
+  "undeclared_packages": [],
+  "dead_links": [
+   "https://robotmsgs.com/types/control/EffortStall/",
+   "https://robotmsgs.com/types/control/Elapsed/",
+   "https://robotmsgs.com/types/control/JointCommand/",
+   "https://robotmsgs.com/types/control/JointCommandSequence/",
+   "https://robotmsgs.com/types/control/JointCommandStep/",
+   "https://robotmsgs.com/types/control/Reached/",
+   "https://robotmsgs.com/types/control/Settled/",
+   "https://robotmsgs.com/types/control/Stall/",
+   "https://robotmsgs.com/types/manipulation/GraspPose/",
+   "https://robotmsgs.com/types/manipulation/NamedPose/",
+   "https://robotmsgs.com/types/std/DiagnosticRecord/",
+   "https://robotmsgs.com/types/std/LogRecord/",
+   "https://robotmsgs.com/types/std/Metrics/"
+  ],
+  "links_checked": 68,
+  "ci_not_green": [
+   "robot_msgs",
+   "robot_reach",
+   "sim2real",
+   "traj_compare"
+  ],
+  "pypi_mismatch": [
+   "like_keras",
+   "robot_activity",
+   "robot_autonomy",
+   "robot_controllers",
+   "robot_diagnostics",
+   "robot_metrics",
+   "robot_models",
+   "robot_msgs",
+   "robot_reach",
+   "robot_thermal",
+   "robot_trajectories",
+   "sim2real",
+   "traj_compare"
+  ],
+  "site_serves_graph": false,
+  "site_sources_match_rebuild": false,
+  "site_page_matches_main": true
+ }
+}

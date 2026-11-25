@@ -5,18 +5,18 @@
   "remit": "keep robot-sdk a true, current directory of the robot-* packages, inside the gates (ruler v1, OBJECTIVES.md)",
   "kpi": {
     "name": "max_stale_hours (worst listed repo: hours since the first push the live graph missed)",
-    "value": null,
+    "value": 0.0,
     "unit": "h",
     "direction": "down",
     "target": 24,
-    "level": "0 of 9 gates",
+    "level": "5 of 9 gates",
     "level_name": "ruler v1 \u00b7 live directory",
-    "next_gate": "fresh_24h",
-    "on_track": false
+    "next_gate": "ci_green",
+    "on_track": true
   },
   "counter_kpi": {
     "name": "gates failed by the best solution",
-    "value": 9,
+    "value": 4,
     "unit": "gates",
     "owner": "Robot SDK Agent"
   },
@@ -37,5 +37,5 @@
     "wandb": null,
     "vault": null
   },
-  "updated_t": 1795580816.450973
+  "updated_t": 1795581105.5878384
 }
