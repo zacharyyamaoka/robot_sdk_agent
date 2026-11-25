@@ -102,7 +102,8 @@ def progress() -> None:
     ledger = rows()
     newest: dict[str, dict] = {}
     for row in ledger:
-        newest[row["solution"]] = row
+        if row.get("ruler") == RULER:  # rows scored on an older ruler stay in the ledger, never in the ranking
+            newest[row["solution"]] = row
     ranked = sorted(newest.values(), key=rank_key)
     best = ranked[0] if ranked else None
     lines = [

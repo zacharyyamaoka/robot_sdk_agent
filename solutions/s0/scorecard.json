@@ -1,7 +1,7 @@
 {
  "schema": "robot-sdk-agent-scorecard/1",
- "ruler": "v1",
- "collected": "2026-11-25T04:30:08+00:00",
+ "ruler": "v2",
+ "collected": "2026-11-25T04:44:03+00:00",
  "directory": "live",
  "objective": {
   "name": "max_stale_hours",
@@ -9,12 +9,13 @@
   "direction": "down"
  },
  "admissible": false,
- "gate_pass_rate": 0.5555555555555556,
+ "gate_pass_rate": 0.5,
  "gates": {
   "fresh_24h": true,
   "lint_clean": true,
   "graph_true": true,
   "listed_all": false,
+  "upstream_public": false,
   "declared_all": true,
   "links_alive": false,
   "ci_green": false,
@@ -25,9 +26,13 @@
   "ci_green",
   "links_alive",
   "listed_all",
-  "pypi_current"
+  "pypi_current",
+  "upstream_public"
  ],
  "metrics": {
+  "missing_upstream": [
+   "robot_collision"
+  ],
   "stale_hours": {
    "robot_msgs": 0.0,
    "robot_models": 0.0,
@@ -66,13 +71,15 @@
    "https://robotmsgs.com/types/control/Reached/",
    "https://robotmsgs.com/types/control/Settled/",
    "https://robotmsgs.com/types/control/Stall/",
+   "https://robotmsgs.com/types/manipulation/AllowedCollisionMatrix/",
    "https://robotmsgs.com/types/manipulation/GraspPose/",
    "https://robotmsgs.com/types/manipulation/NamedPose/",
    "https://robotmsgs.com/types/std/DiagnosticRecord/",
    "https://robotmsgs.com/types/std/LogRecord/",
-   "https://robotmsgs.com/types/std/Metrics/"
+   "https://robotmsgs.com/types/std/Metrics/",
+   "https://zacharyyamaoka.github.io/robot_collision/"
   ],
-  "links_checked": 69,
+  "links_checked": 76,
   "ci_not_green": [
    "robot_msgs",
    "robot_reach",

@@ -24,13 +24,13 @@
   <h1>Robot SDK Agent</h1>
   <div class="muted">Keeps <a href="https://zacharyyamaoka.github.io/robot_sdk/">robot-sdk</a> a true, current directory. This page reads only <code>ledger.jsonl</code> and <code>status.json</code>. · <a href="https://github.com/zacharyyamaoka/robot_sdk_agent">repo</a> · <a href="https://github.com/zacharyyamaoka/robot_sdk_agent/blob/main/OBJECTIVES.md">objectives &amp; gates</a></div>
   <div class="verdict" id="verdict">Loading…</div>
-  <h2>Gates (newest score of each solution)</h2>
+  <h2>Gates (newest score of each solution, current ruler)</h2>
   <div class="scroll"><table id="gates"></table></div>
   <h2>Ledger</h2>
   <div class="scroll"><table id="ledger"></table></div>
 </main>
 <script>
-const GATES = ["fresh_24h","lint_clean","graph_true","listed_all","declared_all","links_alive","ci_green","pypi_current","site_current"];
+const GATES = ["fresh_24h","lint_clean","graph_true","listed_all","upstream_public","declared_all","links_alive","ci_green","pypi_current","site_current"];
 const fmt = v => v === null || v === undefined ? "—" : (typeof v === "number" && !Number.isInteger(v) ? v.toFixed(2) : String(v));
 const cell = (tag, text, cls) => { const e = document.createElement(tag); e.textContent = text; if (cls) e.className = cls; return e; };
 const row = (cells, tag = "td") => { const tr = document.createElement("tr"); cells.forEach(c => tr.append(typeof c === "object" ? c : cell(tag, c))); return tr; };
@@ -41,14 +41,15 @@ Promise.all([fetch("data/ledger.jsonl").then(r => r.text()), fetch("data/status.
   document.getElementById("verdict").append(
     cell("div", `${k.level} · worst staleness ${fmt(k.value)} h (gate ≤ ${k.target} h)`, "big"),
     cell("div", `next gate to win: ${k.next_gate || "none, all pass"} · ${status.todo.open} open ideas`, "muted"));
-  const newest = {}; rows.forEach(r => newest[r.solution] = r);
+  const ruler = rows.length ? rows[rows.length - 1].ruler : null;
+  const newest = {}; rows.filter(r => r.ruler === ruler).forEach(r => newest[r.solution] = r);
   const g = document.getElementById("gates");
   g.append(row(["solution", "scored", "max stale (h)", ...GATES], "th"));
   Object.values(newest).forEach(r => g.append(row([r.solution, r.t, fmt(r.objective),
     ...GATES.map(name => cell("td", r.gates[name] ? "pass" : "fail", r.gates[name] ? "pass" : "fail"))])));
   const l = document.getElementById("ledger");
-  l.append(row(["t", "solution", "directory", "max stale (h)", "lint fails", "unlisted", "undeclared", "dead links", "CI not green", "PyPI behind"], "th"));
-  rows.slice().reverse().forEach(r => { const m = r.metrics; l.append(row([r.t, r.solution, r.directory, fmt(r.objective),
+  l.append(row(["t", "ruler", "solution", "directory", "max stale (h)", "lint fails", "unlisted", "undeclared", "dead links", "CI not green", "PyPI behind"], "th"));
+  rows.slice().reverse().forEach(r => { const m = r.metrics; l.append(row([r.t, r.ruler, r.solution, r.directory, fmt(r.objective),
     fmt(m.lint_failures), fmt(m.unlisted_repos), fmt(m.undeclared_packages), fmt(m.dead_links), fmt(m.ci_not_green), fmt(m.pypi_mismatch)])); });
 }).catch(e => { document.getElementById("verdict").textContent = "Could not load the ledger: " + e; });
 </script>

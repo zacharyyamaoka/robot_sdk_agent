@@ -2,33 +2,33 @@
   "schema": "ai-team-status/1",
   "member": "Robot SDK Agent",
   "team": "Robot Team",
-  "remit": "keep robot-sdk a true, current directory of the robot-* packages, inside the gates (ruler v1, OBJECTIVES.md)",
+  "remit": "keep robot-sdk a true, current directory of the robot-* packages, inside the gates (ruler v2, OBJECTIVES.md)",
   "kpi": {
     "name": "max_stale_hours (worst listed repo: hours since the first push the live graph missed)",
     "value": 0.0,
     "unit": "h",
     "direction": "down",
     "target": 24,
-    "level": "5 of 9 gates",
-    "level_name": "ruler v1 \u00b7 live directory",
+    "level": "5 of 10 gates",
+    "level_name": "ruler v2 \u00b7 live directory",
     "next_gate": "ci_green",
     "on_track": true
   },
   "counter_kpi": {
     "name": "gates failed by the best solution",
-    "value": 4,
+    "value": 5,
     "unit": "gates",
     "owner": "Robot SDK Agent"
   },
   "status": "idle",
   "blocked_on": null,
   "todo": {
-    "open": 10,
-    "done_7d": 1,
+    "open": 11,
+    "done_7d": 2,
     "top": [
       "**Push-triggered refresh**: a tiny workflow in each package (`on: push: branches: [main]`) that sends",
-      "**Weekly discovery sweep**: list the owner's public repos, flag any whose pyproject names robot-msgs or which",
-      "**Dead-link PRs**: robotmsgs.com's per-type pages (`/types/<module>/<Type>/`) 404 for 13 types; either the"
+      "**Missing-upstream nudge**: when `upstream_public` is red for more than a day, open an issue on robot_sdk naming the package and its publish script. Expect: the gate's red time shrinks; the push itself stays Zach's.",
+      "**Weekly discovery sweep**: list the owner's public repos, flag any whose pyproject names robot-msgs or which"
     ]
   },
   "links": {
@@ -37,5 +37,5 @@
     "wandb": null,
     "vault": null
   },
-  "updated_t": 1795581105.5878384
+  "updated_t": 1795581936.5558994
 }

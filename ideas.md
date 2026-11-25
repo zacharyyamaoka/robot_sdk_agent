@@ -7,11 +7,13 @@ delete it.
 
 - [x] ~~The simplest thing: one hourly workflow in robot_sdk that clones every listed repo, regenerates graph.json,
   lints, rebuilds the page and publishes to gh-pages when it changed~~ → `s0`. Fresh (worst 0 h at scoring), lint
-  clean, graph true; fails coverage, links, CI and PyPI (none of which a cron can fix).
+  clean, graph true, site current right after a run (ruler v2: 5 of 10 gates); fails coverage, the missing robot_collision upstream, links, CI and PyPI (none of which a cron can fix). A score taken minutes after a peer push fails site_current until the next run (04:39 vs 04:44 rows).
 - [ ] **Push-triggered refresh**: a tiny workflow in each package (`on: push: branches: [main]`) that sends
   `repository_dispatch` (type `package-pushed`) to robot_sdk; s0's workflow already listens for it. Expect: worst
   staleness from ≤ ~1 h (cron) to ≤ ~2 min; `site_current` passes on most snapshots. Needs: a fine-grained token with
   `contents: write`/dispatch on robot_sdk stored as a secret in each package (Zach: a secret).
+- [x] ~~Missing upstream: a package pinned before its first public push (robot_collision, 2026-11-24) crashed s0's clone and turned the run red~~ → s0 @ 101156e keeps it from the last good graph (`upstream: "missing"`); ruler v2 scores it once (`upstream_public`).
+- [ ] **Missing-upstream nudge**: when `upstream_public` is red for more than a day, open an issue on robot_sdk naming the package and its publish script. Expect: the gate's red time shrinks; the push itself stays Zach's.
 - [ ] **Weekly discovery sweep**: list the owner's public repos, flag any whose pyproject names robot-msgs or which
   carry a `robot-sdk.toml` and that the directory doesn't list; open an issue (or a PR adding the pin) on robot_sdk.
   Expect: `listed_all` red → issue within a week (today: dataclass_coverage, gripper-collision-tuner).

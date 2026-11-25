@@ -35,6 +35,7 @@ def passing() -> dict:
         "site": {"index_status": 200, "index_html_sha256": "f" * 64},
         "rebuild": {
             "graph": truth,
+            "cloned": {"robot_msgs": True, "robot_reach": True, "some_agent": True},
             "lint_exit": 0,
             "lint": {"robot_msgs": "pass", "robot_reach": "pass"},
             "index_html_sha256": "f" * 64,
@@ -64,4 +65,19 @@ def stale(inputs: dict, repo: str, since: str, new_sha: str = "eeeeeee") -> dict
     """Main moved past what the directory records: the fresh build now names new_sha for the repo."""
     inputs["behind"][repo].update(status="ahead", ahead_by=1, first_missed_t=since)
     inputs["rebuild"]["graph"]["sources"][repo] = new_sha
+    return inputs
+
+
+def missing_upstream(inputs: dict, repo: str = "robot_new") -> dict:
+    """A pinned package with no public repo yet: the directory carries it from its last good graph, the fresh build
+    can't clone it, and nothing about its repo can be fetched."""
+    inputs["graph"]["packages"].append({"id": repo, "pypi": "robot-new", "repo_url": f"https://github.com/o/{repo}",
+                                        "lint": "pass", "upstream": "missing"})  # fmt: skip
+    inputs["graph"]["uses"].append({"package": repo, "type": "robot_msgs.Only", "kind": "consumes"})
+    inputs["graph"]["types"].append({"id": "robot_msgs.Only", "docs_url": None})
+    inputs["graph"]["sources"][repo] = "1234567"
+    inputs["rebuild"]["cloned"][repo] = False
+    inputs["links"][f"https://github.com/o/{repo}"] = 404
+    inputs["declarations"][repo] = False
+    inputs["behind"][repo] = {"graph_sha": "1234567", "status": "unknown"}
     return inputs

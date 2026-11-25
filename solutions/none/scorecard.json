@@ -1,20 +1,21 @@
 {
  "schema": "robot-sdk-agent-scorecard/1",
- "ruler": "v1",
- "collected": "2026-11-25T04:28:33+00:00",
+ "ruler": "v2",
+ "collected": "2026-11-25T04:36:01+00:00",
  "directory": "main",
  "objective": {
   "name": "max_stale_hours",
-  "value": null,
+  "value": 0.06833333333333333,
   "direction": "down"
  },
  "admissible": false,
- "gate_pass_rate": 0.2222222222222222,
+ "gate_pass_rate": 0.3,
  "gates": {
-  "fresh_24h": false,
+  "fresh_24h": true,
   "lint_clean": true,
   "graph_true": false,
   "listed_all": false,
+  "upstream_public": false,
   "declared_all": true,
   "links_alive": false,
   "ci_green": false,
@@ -23,16 +24,19 @@
  },
  "failed_gates": [
   "ci_green",
-  "fresh_24h",
   "graph_true",
   "links_alive",
   "listed_all",
   "pypi_current",
-  "site_current"
+  "site_current",
+  "upstream_public"
  ],
  "metrics": {
+  "missing_upstream": [
+   "robot_collision"
+  ],
   "stale_hours": {
-   "robot_msgs": 0.2427777777777778,
+   "robot_msgs": 0.0,
    "robot_models": 0.0,
    "robot_controllers": 0.0,
    "robot_reach": 0.0,
@@ -41,15 +45,15 @@
    "robot_autonomy": 0.0,
    "robot_metrics": 0.0,
    "robot_activity": 0.0,
-   "traj_compare": null,
+   "traj_compare": 0.0,
    "sim2real": 0.0,
    "robot_diagnostics": 0.0,
    "like_keras": 0.0,
-   "robot_sdk_agent": null,
+   "robot_sdk_agent": 0.06833333333333333,
    "trajectory_tracking_agent": 0.0
   },
-  "max_stale_hours": null,
-  "stale_packages": 3,
+  "max_stale_hours": 0.06833333333333333,
+  "stale_packages": 1,
   "listed": 15,
   "lint_failures": 0,
   "lint_pass_rate": 1.0,
@@ -59,8 +63,7 @@
   ],
   "unlisted_repos": [
    "dataclass_coverage",
-   "gripper-collision-tuner",
-   "robot_sdk_agent"
+   "gripper-collision-tuner"
   ],
   "undeclared_packages": [],
   "dead_links": [
@@ -72,13 +75,15 @@
    "https://robotmsgs.com/types/control/Reached/",
    "https://robotmsgs.com/types/control/Settled/",
    "https://robotmsgs.com/types/control/Stall/",
+   "https://robotmsgs.com/types/manipulation/AllowedCollisionMatrix/",
    "https://robotmsgs.com/types/manipulation/GraspPose/",
    "https://robotmsgs.com/types/manipulation/NamedPose/",
    "https://robotmsgs.com/types/std/DiagnosticRecord/",
    "https://robotmsgs.com/types/std/LogRecord/",
-   "https://robotmsgs.com/types/std/Metrics/"
+   "https://robotmsgs.com/types/std/Metrics/",
+   "https://zacharyyamaoka.github.io/robot_collision/"
   ],
-  "links_checked": 68,
+  "links_checked": 76,
   "ci_not_green": [
    "robot_msgs",
    "robot_reach",

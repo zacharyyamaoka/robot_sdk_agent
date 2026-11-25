@@ -15,7 +15,7 @@
   "directory": "live",
   "deployed": {
     "repo": "https://github.com/zacharyyamaoka/robot_sdk",
-    "commit": "dc405f7",
+    "commit": "cbe11f2",
     "files": [
       ".github/workflows/refresh-directory.yml",
       "tools/refresh/refresh.py"
@@ -29,13 +29,35 @@
       {
         "commit": "dc405f7",
         "what": "discover agents on GitHub by their robot-sdk.toml; build the page with site/publish_dashboard.py (V5)"
+      },
+      {
+        "commit": "101156e",
+        "what": "a pinned package with no public repo is a missing upstream (kept from the last good graph, upstream = \"missing\"), not a crash"
+      },
+      {
+        "commit": "cbe11f2",
+        "what": "authenticate the repo listing with the job token; fall back to the last good graph's agents"
       }
     ]
   },
   "evidence": {
     "runs": [
       "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45545122568",
-      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45545946598"
-    ]
+      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45545946598",
+      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45546888534",
+      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45547441197",
+      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45547683564",
+      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45548462188",
+      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45548635885"
+    ],
+    "notes": {
+      "45545122568": "first run (push): published",
+      "45545946598": "workflow_dispatch: unchanged, no commit",
+      "45546888534": "workflow_dispatch after robot_sdk_agent went public: discovered it as an agent",
+      "45547441197": "red: robot_collision pinned before its repo existed (clone crashed)",
+      "45547683564": "after the fix: green, robot_collision kept as a missing upstream",
+      "45548462188": "red: unauthenticated repo listing hit the runner IP's rate limit",
+      "45548635885": "after the fix: green, published"
+    }
   }
 }

@@ -28,7 +28,7 @@ def test_the_passing_fixture_passes():
 NEEDS = {
     "collected": {"fresh_24h"},
     "graph": set(GATES),  # no directory: nothing about it can be true
-    "rebuild": {"lint_clean", "graph_true", "links_alive", "site_current"},
+    "rebuild": {"lint_clean", "graph_true", "upstream_public", "links_alive", "site_current"},
     "behind": {"fresh_24h"},
     "repos": {"listed_all"},
     "declarations": {"declared_all"},

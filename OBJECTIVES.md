@@ -1,11 +1,11 @@
-# Objectives & Gates (ruler v1, frozen 2026-11-24)
+# Objectives & Gates (ruler v2, frozen 2026-11-24; v1 the same day, see §5)
 
 The outside of the black box: what the directory must be, how a script measures it from public data, and how a
 solution is scored. Nothing here says how a solution keeps the directory current. Changing anything in this file or
 in the ruler files makes **ruler v2**: a new section below, a new hash, and every solution re-scored on it.
 A solution never edits this file, `scorer/`, `tests/ruler_fixtures.py` or `tests/test_scorer_*.py`.
 
-ruler sha256: `cbe90a9978ccd813c2e56b7281e0bf953b7fbbeaa15a401b62e459089ebf19a7`
+ruler sha256: `e5ec98ef2302aecfe7d7118dd620a7a6015ba90ae4d7498d834f2fdeec2dc171` (v2; v1 was cbe90a99…19a7)
 
 (`python3 tests/test_scorer_frozen.py` prints it; `tests/test_scorer_frozen.py` fails when the files and this line
 disagree.)
@@ -52,6 +52,7 @@ not listed: it is the directory). `now` = the time the inputs were collected.
 | `lint_failures`, `lint_pass_rate` | robot_sdk's `python -m tools.sdk_graph check` on the fresh build: packages not `pass` (an `undeclared` one is counted under coverage instead); a package the check never names counts as a failure | fresh build |
 | `graph_matches_rebuild` | the published graph equals the fresh build's, ignoring `generated` and `sources` (freshness scores those) | live graph vs fresh build |
 | `unlisted_repos` | public, non-fork, non-archived repos of the owner whose `pyproject.toml` on the default branch names `robot-msgs`/`robot_msgs`, or which carry a `robot-sdk.toml`, and are not listed (nor robot_sdk) | `/users/o/repos`, raw.githubusercontent.com |
+| `missing_upstream` (v2) | listed repos the fresh build could not clone from GitHub (no public repo yet, or private); the published graph may still carry them from its last good build, marked `upstream: "missing"` | fresh build's clone results |
 | `undeclared_packages` | listed packages with no `robot-sdk.toml` on main | raw.githubusercontent.com |
 | `dead_links` | every `repo_url` and `docs_url` in the published graph and every absolute link in robot_sdk's `README.md` and `skill/SKILL.md` (a `../<repo>` link = that repo's GitHub URL) that answers ≥ 400 or not at all (HEAD, then GET when HEAD is refused); plus every other relative link there that names no file in the fresh clone | the links themselves |
 | `ci_not_green` | listed packages where, on main, the newest completed run of any workflow is not `success`/`skipped`, or where there is no completed run on main | `/repos/o/r/actions/runs?branch=main&status=completed` |
@@ -68,6 +69,7 @@ not listed: it is the directory). `now` = the time the inputs were collected.
 | `lint_clean` | `lint_failures` = 0 and the check exits 0 | a declaration that lies about the code is worse than none |
 | `graph_true` | `graph_matches_rebuild` | the published facts are the facts a fresh build gives |
 | `listed_all` | `unlisted_repos` empty | a robot_msgs package the directory doesn't list is invisible |
+| `upstream_public` (v2) | `missing_upstream` empty | a listed package nobody can clone can't be checked or installed from source; it is a scored condition, not a crash |
 | `declared_all` | `undeclared_packages` empty | each package describes itself (decentralized self-description) |
 | `links_alive` | `dead_links` empty (and ≥ 1 link checked) | a directory that points nowhere |
 | `ci_green` | `ci_not_green` empty | a listed package should build on main |
@@ -85,8 +87,21 @@ last). The *best* solution is the top row.
 re-derives offline with `python -m scorer score <that file>`. Compare solutions on scores taken close in time, and
 prefer several snapshots over one.
 
-## 4. Deferred to ruler v2 (named so nobody thinks they were forgotten)
+## 4. Deferred to a later ruler (named so nobody thinks they were forgotten)
 
 Freshness of the robot_sdk README/skill prose (only its links are checked); a staleness *distribution* over a window
 instead of a snapshot (needs a scheduled scorer); agents' own declarations (the `role = "agent"` format is being
 defined in tools/sdk_graph); repos outside the owner; CI on pull requests; the PyPI wheel's content vs main.
+
+## 5. Ruler v2 (2026-11-24, the same evening as v1)
+
+WHY: robot_sdk main @ 13403ba pinned robot-collision before its GitHub repo existed (its first public push is Zach's
+call). v1 had no word for that: the unclonable package nulled `max_stale_hours` and also failed `declared_all`,
+`links_alive`, `ci_green` and `pypi_current`, one cause counted five times. v2:
+
+- adds `missing_upstream` and the gate `upstream_public` (§2, §3);
+- leaves a missing-upstream package out of freshness, `graph_true` (its package row, its uses, and types only it
+  uses), `site_sources_match_rebuild`, `declared_all`, `ci_green`, `pypi_current` and its own `repo_url` in
+  `links_alive`: it is scored once, by its own gate;
+- changes nothing else. The two v1 rows in `ledger.jsonl` stay as recorded (`"ruler": "v1"`); every solution is
+  re-scored on v2.

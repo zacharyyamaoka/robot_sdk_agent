@@ -5,7 +5,7 @@ rebuild from public clones); `score.score(inputs)` turns them into a scorecard a
 A solution never edits this folder: tests/test_scorer_frozen.py holds its sha256 to the one in OBJECTIVES.md.
 """
 
-RULER = "v1"
+RULER = "v2"
 OWNER = "zacharyyamaoka"
 SDK_REPO = "robot_sdk"
 SITE = "https://zacharyyamaoka.github.io/robot_sdk/"

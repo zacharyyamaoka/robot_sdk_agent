@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pytest
-from ruler_fixtures import passing, stale
+from ruler_fixtures import missing_upstream, passing, stale
 
 from scorer.score import score
 
@@ -117,3 +117,16 @@ def test_scoring_main_instead_of_the_live_site():
     def m(i):
         i["directory"] = "main"
     assert failed(m) == ["site_current"]
+
+
+def test_a_missing_upstream_fails_only_its_own_gate():
+    card = score(missing_upstream(passing()))
+    assert card["failed_gates"] == ["upstream_public"]
+    assert card["metrics"]["missing_upstream"] == ["robot_new"]
+    assert card["objective"]["value"] == 0.0  # left out of freshness, never nulls it
+
+
+def test_a_clone_that_was_never_reported_is_missing():
+    def m(i):
+        i["rebuild"]["cloned"]["robot_reach"] = None
+    assert "upstream_public" in failed(m)
