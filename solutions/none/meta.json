@@ -1,0 +1,10 @@
+{
+  "id": "none",
+  "parent": null,
+  "change": "the status quo before any refresh mechanism: a human (or a lane) regenerates site/data/graph.json by hand and commits it on robot_sdk main; nothing publishes it",
+  "proposed_by": {"agent": "baseline (no solution)", "model": null, "session": null},
+  "created": "2026-11-24T21:20:00-07:00",
+  "tags": ["baseline"],
+  "directory": "main",
+  "evidence": {"graph": "https://github.com/zacharyyamaoka/robot_sdk/blob/main/site/data/graph.json"}
+}

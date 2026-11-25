@@ -1,0 +1,41 @@
+{
+  "id": "s0",
+  "parent": "none",
+  "change": "a GitHub Actions workflow in robot_sdk (hourly, on every robot_sdk push, on demand, and on a package-pushed repository_dispatch) clones every listed repo at main, regenerates graph.json with tools.sdk_graph, lints, rebuilds the landing page, and publishes both to gh-pages when anything changed",
+  "proposed_by": {
+    "agent": "Claude Code (Robot SDK Agent, solution 0)",
+    "model": "claude-opus-5-5",
+    "session": "34000252"
+  },
+  "created": "2026-11-24T21:12:00-07:00",
+  "tags": [
+    "baseline",
+    "generation-0"
+  ],
+  "directory": "live",
+  "deployed": {
+    "repo": "https://github.com/zacharyyamaoka/robot_sdk",
+    "commit": "dc405f7",
+    "files": [
+      ".github/workflows/refresh-directory.yml",
+      "tools/refresh/refresh.py"
+    ],
+    "publishes": "https://zacharyyamaoka.github.io/robot_sdk/data/graph.json",
+    "history": [
+      {
+        "commit": "9b1c15a",
+        "what": "first version: clone the pinned packages and README's agents, site/build.py"
+      },
+      {
+        "commit": "dc405f7",
+        "what": "discover agents on GitHub by their robot-sdk.toml; build the page with site/publish_dashboard.py (V5)"
+      }
+    ]
+  },
+  "evidence": {
+    "runs": [
+      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45545122568",
+      "https://github.com/zacharyyamaoka/robot_sdk/actions/runs/45545946598"
+    ]
+  }
+}

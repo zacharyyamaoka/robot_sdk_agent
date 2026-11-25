@@ -1,0 +1,41 @@
+{
+  "schema": "ai-team-status/1",
+  "member": "Robot SDK Agent",
+  "team": "Robot Team",
+  "remit": "keep robot-sdk a true, current directory of the robot-* packages, inside the gates (ruler v1, OBJECTIVES.md)",
+  "kpi": {
+    "name": "max_stale_hours (worst listed repo: hours since the first push the live graph missed)",
+    "value": null,
+    "unit": "h",
+    "direction": "down",
+    "target": 24,
+    "level": "0 of 9 gates",
+    "level_name": "ruler v1 \u00b7 live directory",
+    "next_gate": "fresh_24h",
+    "on_track": false
+  },
+  "counter_kpi": {
+    "name": "gates failed by the best solution",
+    "value": 9,
+    "unit": "gates",
+    "owner": "Robot SDK Agent"
+  },
+  "status": "idle",
+  "blocked_on": null,
+  "todo": {
+    "open": 10,
+    "done_7d": 1,
+    "top": [
+      "**Push-triggered refresh**: a tiny workflow in each package (`on: push: branches: [main]`) that sends",
+      "**Weekly discovery sweep**: list the owner's public repos, flag any whose pyproject names robot-msgs or which",
+      "**Dead-link PRs**: robotmsgs.com's per-type pages (`/types/<module>/<Type>/`) 404 for 13 types; either the"
+    ]
+  },
+  "links": {
+    "repo": "https://github.com/zacharyyamaoka/robot_sdk_agent",
+    "report": "PROGRESS.md",
+    "wandb": null,
+    "vault": null
+  },
+  "updated_t": 1795580816.450973
+}

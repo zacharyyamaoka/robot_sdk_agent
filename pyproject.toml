@@ -1,0 +1,15 @@
+[project]
+name = "robot-sdk-agent"
+version = "0.1.0"
+description = "A black-box agent that keeps robot-sdk a true, current directory of the robot-* packages."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "tests"]
+testpaths = ["tests"]

@@ -1,0 +1,16 @@
+# robot-sdk declaration: this repo is an agent (it builds and keeps the directory; it is not a package).
+# Checked by robot_sdk's `python -m tools.sdk_graph check` (docs/graph-schema.md in github.com/zacharyyamaoka/robot_sdk).
+schema = "robot-sdk-declaration/1"
+role = "agent"
+name = "Robot SDK Agent"
+one_line = "Keeps robot-sdk a true, current directory of the robot-* packages"
+summary = "A black-box agent: a frozen scorer measures how stale, true and complete the live robot-sdk directory is (freshness against each repo's main, the declaration lint, coverage of robot_msgs repos, dead links, CI and PyPI health, the live site), and a scored population of refresh mechanisms competes to keep every gate green."
+objective = "Lowest max_stale_hours (worst listed repo's hours behind its main) on the live directory, inside its gates (zero lint failures, nothing more than 24 h stale)"
+# The scorer runs robot_sdk's tools.sdk_graph as a subprocess on public clones; it imports no robot-sdk package.
+builds_on = []
+status = "status.json"
+
+[links]
+github = "https://github.com/zacharyyamaoka/robot_sdk_agent"
+progress = "https://github.com/zacharyyamaoka/robot_sdk_agent/blob/main/PROGRESS.md"
+objectives = "https://github.com/zacharyyamaoka/robot_sdk_agent/blob/main/OBJECTIVES.md"
