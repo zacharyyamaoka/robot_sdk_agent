@@ -5,7 +5,7 @@ solution is scored. Nothing here says how a solution keeps the directory current
 in the ruler files makes **ruler v2**: a new section below, a new hash, and every solution re-scored on it.
 A solution never edits this file, `scorer/`, `tests/ruler_fixtures.py` or `tests/test_scorer_*.py`.
 
-ruler sha256: `e5ec98ef2302aecfe7d7118dd620a7a6015ba90ae4d7498d834f2fdeec2dc171` (v2; v1 was cbe90a99…19a7)
+ruler sha256: `d4038472b1f3a78960bf6513f9e7b5a90dc2763c89b80efb749cbcd892119bdc` (v2; v1 was cbe90a99…19a7; v2 before the 2026-11-27 per-task breakdown `tasks`, a reporting change, was e5ec98ef…c171)
 
 (`python3 tests/test_scorer_frozen.py` prints it; `tests/test_scorer_frozen.py` fails when the files and this line
 disagree.)

@@ -78,6 +78,33 @@ def freshness(inputs: dict, graph: dict, truth: dict, missing: frozenset = froze
     }
 
 
+def tasks(graph: dict, metrics: dict, lint: dict) -> list[dict]:
+    """The per-task breakdown (blackbox_agent CONTRACT §29): one entry per listed repo, a projection of the metrics
+    score() already computed. objective = the repo's own stale hours (the objective is their max; null when nobody can
+    say it is current, as in `stale_hours`); kind = package or agent, as the directory lists it; verdicts = the gates
+    that check that repo one by one. A missing upstream (`upstream_public`) has no freshness and objective null."""
+    agents = {a.get("id") for a in _list(graph.get("agents"))}
+    hours = _dict(metrics.get("stale_hours"))
+    missing = set(_list(metrics.get("missing_upstream")))
+    out = []
+    for repo in dict.fromkeys(list(hours) + sorted(missing)):
+        verdicts: dict[str, bool] = {}
+        if repo in missing:
+            verdicts["upstream_public"] = False
+        else:
+            verdicts["fresh_24h"] = hours.get(repo) is not None and hours[repo] <= STALE_GATE_HOURS
+            if repo not in agents:
+                for gate, metric in (("declared", "undeclared_packages"), ("ci_green", "ci_not_green"),
+                                     ("pypi_current", "pypi_mismatch")):
+                    if isinstance(metrics.get(metric), list):
+                        verdicts[gate] = repo not in metrics[metric]
+                if repo in lint:
+                    verdicts["lint_pass"] = lint.get(repo) == "pass"
+        out.append({"task": repo, "kind": "agent" if repo in agents else "package",
+                    "objective": None if repo in missing else hours.get(repo), "verdicts": verdicts})
+    return out
+
+
 def score(inputs: object) -> dict:
     inputs = _dict(inputs)
     graph = _dict(inputs.get("graph"))
@@ -183,4 +210,5 @@ def score(inputs: object) -> dict:
         "gates": gates,
         "failed_gates": sorted(name for name, ok in gates.items() if not ok),
         "metrics": metrics,
+        "tasks": tasks(graph, metrics, lint),
     }

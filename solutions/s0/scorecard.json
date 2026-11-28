@@ -104,5 +104,187 @@
   "site_serves_graph": true,
   "site_sources_match_rebuild": true,
   "site_page_matches_main": true
- }
+ },
+ "tasks": [
+  {
+   "task": "robot_msgs",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": false,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_models",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_controllers",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_reach",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": false,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_thermal",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_trajectories",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_autonomy",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_metrics",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_activity",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "traj_compare",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": false,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "sim2real",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": false,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_diagnostics",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "like_keras",
+   "kind": "package",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true,
+    "declared": true,
+    "ci_green": true,
+    "pypi_current": false,
+    "lint_pass": true
+   }
+  },
+  {
+   "task": "robot_sdk_agent",
+   "kind": "agent",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true
+   }
+  },
+  {
+   "task": "trajectory_tracking_agent",
+   "kind": "agent",
+   "objective": 0.0,
+   "verdicts": {
+    "fresh_24h": true
+   }
+  },
+  {
+   "task": "robot_collision",
+   "kind": "package",
+   "objective": null,
+   "verdicts": {
+    "upstream_public": false
+   }
+  }
+ ]
 }
